@@ -1,0 +1,35 @@
+
+
+
+// const viewContact = async (req, res) => {
+//   try {
+//     const { searchData } = req.body;
+
+//     // Check if searchData is provided or not
+//     let query = {};
+
+//     if (searchData) {
+//       // Use regex for partial matching (case insensitive)
+//       query = {
+//         $or: [
+//           { username: { $regex: searchData, $options: 'i' } },
+//           { phone: { $regex: searchData, $options: 'i' } }
+//         ]
+//       };
+//     }
+
+//     // Find contacts based on query (either empty or searchData)
+//     const contactData = await Contact.find(query);
+
+//     return res.status(200).json({
+//       success: true,
+//       msg: 'Fetched successfully!',
+//       contact: contactData
+//     });
+//   } catch (error) {
+//     return res.status(400).json({
+//       success: false,
+//       msg: error.message,
+//     });
+//   }
+// };
