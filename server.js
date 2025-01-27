@@ -46,7 +46,7 @@ const userChatSockets = new Map(); // To map user IDs to socket IDs
 const http = require('http');
 const server = http.createServer(app);
 
-const io = require('socket.io')(3000,{
+const io = require('socket.io')(10000,{
     cors:{
       origin : "*",
     },
