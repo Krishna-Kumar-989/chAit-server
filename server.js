@@ -77,7 +77,7 @@ chat_io.use(socket_auth)
 const dbUrl = process.env.DATABASE_CONNECTION_STRING;
 
 
-const port = 3000;
+const port = 10000;
 
 const mongo_url = dbUrl;
 
