@@ -8,17 +8,9 @@ const addContact = async(req,res )=>{
 
      const {username , phone ,contactTo,recentmsg,reference} = req.body;
       
-     const isExists = await Contact.findOne({phone});
+     
 
-       if(isExists)
-       {
-        return res.status(400).json({
-          success :false,
-          msg : "phone already exist",
-        })
-       }
-
-
+console.log("dogs"+username)
 
 
 
@@ -28,13 +20,18 @@ const addContact = async(req,res )=>{
     phone:phone,
     contactTo : contactTo,
     reference : reference, 
-    recentMsg : recentmsg,
+    recentMsg : recentmsg ,
    });
 
 
 
    const contactData = await contact.save();
     
+// Respond with success and the created contact data
+return res.status(201).json({
+  success: true,
+  msg: 'Contact added successfully!',
+});
 
 
     }

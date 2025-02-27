@@ -1,6 +1,7 @@
 
 const Contact = require('./Models/contactModel');
 const Messagemod = require('./Models/messageModel');
+
 const Usrdatamod = require('./Models/userModel');
 require("dotenv").config();
 
@@ -60,9 +61,12 @@ const io = require('socket.io')(3001,{
 
   const chat_io = io.of('/chat')
 
-chat_io.use(socket_auth)
+chat_io.use(socket_auth);
 
 
+
+const chat_ai = io.of('/ai');
+chat_ai.use(socket_auth);
 
 
 
@@ -131,19 +135,23 @@ io.on("connection", socket => {
           console.log("contact to :" +contactTo)
   
           let query = {};
-          if (searchquery) {
-            query = {
-              $and: [
-                {
-                  $or: [
-                    { username: { $regex: searchquery, $options: 'i' } },
-                    { phone: { $regex: searchquery, $options: 'i' } }
+
+          if (searchquery?.trim()) {
+              query = {
+                  $and: [
+                      {
+                          $or: [
+                              { username: { $regex: searchquery, $options: 'i' } },
+                              { phone: { $regex: searchquery, $options: 'i' } }
+                          ]
+                      },
+                      { contactTo: contactTo }
                   ]
-                },
-                { contactTo:contactTo } 
-              ]
-            };
+              };
+          } else if (contactTo) {
+              query = { contactTo: contactTo }; // Always filter by contactTo even if searchquery is empty
           }
+          
   
           const contactData = await Contact.find(query);
           console.log(contactData);
@@ -392,7 +400,8 @@ chat_io.on("connection", socket => {
 
   });
         
-  
+
+
    
   } catch(error) {
     console.error(error);
@@ -403,6 +412,9 @@ chat_io.on("connection", socket => {
 
 //////////////////////////////////////////////
 
+
+
+///socket implementation for ai_chats
 
 
 
