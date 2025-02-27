@@ -16,7 +16,9 @@ const mongoose = require('mongoose'); // Corrected
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin : "*"
+}));
 app.use(express.json());
 
 
@@ -42,8 +44,10 @@ const userChatSockets = new Map(); // To map user IDs to socket IDs
 
 
 
+const http = require('http');
+const server = http.createServer(app);
 
-const io = require('socket.io')(3001,{
+const io = require('socket.io')(10000,{
     cors:{
       origin : "*",
     },
